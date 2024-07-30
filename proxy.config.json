@@ -1,0 +1,8 @@
+{
+  "/tweeter/*": {
+    "target": "http://localhost:9080",
+    "changeOrigin": true,
+    "secure": true,
+    "logLevel": "debug"
+  }
+}

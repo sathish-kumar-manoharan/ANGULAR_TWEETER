@@ -1,0 +1,193 @@
+
+<html>
+  <head>
+      <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  </head>
+  <body>
+
+    <div class="header mt-4">
+        <h1>
+          Welcome to {{title}}!
+        </h1>
+      </div>
+      
+      <div class="createUser">
+          <input type="text" placeholder="userName" [(ngModel)]=userNameStr maxlength="10">
+          <input type="text" placeholder="firstName" [(ngModel)]=firstNameStr maxlength="10">
+          <input type="text" placeholder="lastName" [(ngModel)]=lastNameStr maxlength="10">
+          <input type="text" placeholder="age" [(ngModel)]=age maxlength="5">
+          <select required="required" [(ngModel)]=gender>
+              <option *ngFor="let item of genders" (value)="item.value">{{item}}</option>
+          </select>
+          <input type="text" placeholder="email" [(ngModel)]=email maxlength="50">
+          <button (click)="createUser()">create User</button>
+      </div>
+      
+      <div class="errorMsg">
+          <span [hidden]="!showSuccess" class="success"> {{errorMsg}} </span>
+          <span [hidden]="!showFailure" class="failure"> {{errorMsg}} </span>
+      </div>
+
+              <div class="searchUser">
+                  <input type="text" placeholder="userName" [(ngModel)]=userName>
+                  <button (click)="searchUser()">Search User</button>
+                  <div [hidden]=!mostPopular >
+                      <table style="width:10%;float:right;">
+                          <tbody>
+                            <tr>
+                              <th>
+                                  <img src="https://charged.media/assets/images/MostPopular-Badge.png" />
+                              </th>
+                              <th>
+                                  <div class="userInfo">
+                                      <table>
+                                        <tbody >
+                                          <tr>
+                                            <td colspan="2">Name</td>
+                                            <td>{{mostPopular ? mostPopular.lastName : ''}},{{mostPopular ? mostPopular.firstName : ''}}</td>
+                                          </tr>
+                                          <tr>
+                                            <td colspan="2">userName</td>
+                                            <td>{{mostPopular ? mostPopular.userName : ''}}</td>
+                                          </tr>
+                                          <tr>
+                                            <td colspan="2">age</td>
+                                            <td>{{mostPopular ? mostPopular.age : ''}}</td>
+                                          </tr>
+                                          <tr>
+                                            <td colspan="2">gender</td>
+                                            <td>{{mostPopular ? mostPopular.gender : ''}}</td>
+                                          </tr>
+                                          <tr>
+                                            <td colspan="2"> email </td>
+                                            <td>{{mostPopular ? mostPopular.email : ''}} </td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                  </div>
+                              </th>
+                            </tr>
+                          </tbody>
+                        </table>
+                  </div>
+                  
+              </div>
+
+      
+
+      
+      
+      
+      <div class="profile " [hidden] = "!showProfile">
+        <div>
+          
+        </div>
+
+
+        <table>
+          <tbody>
+            <tr>
+              <th>
+                  <img src="http://trinitychurchdc.org/wp-content/uploads/2016/02/generic-staff-icon-100x100.png" />
+              </th>
+              <th>
+                  <div class="userInfo">
+                      <table>
+                        <tbody >
+                          <tr>
+                            <td colspan="2">Name</td>
+                            <td>{{user ? user.lastName : ''}},{{user ? user.firstName : ''}}</td>
+                          </tr>
+                          <tr>
+                            <td colspan="2">userName</td>
+                            <td>{{user ? user.userName : ''}}</td>
+                          </tr>
+                          <tr>
+                            <td colspan="2">age</td>
+                            <td>{{user ? user.age : ''}}</td>
+                          </tr>
+                          <tr>
+                            <td colspan="2">gender</td>
+                            <td>{{user ? user.gender : ''}}</td>
+                          </tr>
+                          <tr>
+                            <td colspan="2"> email </td>
+                            <td>{{user ? user.email : ''}} </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                  </div>
+              </th>
+            </tr>
+          </tbody>
+        </table>
+
+      
+        <div class ="postMessage padding" >
+            <input class="messageText" type="text" placeholder="Enter a message" [(ngModel)]=message maxlength="150">
+            <button (click)="postMessages()">post</button>
+        </div>
+      
+        <div class="w3-bar w3-black padding">
+            <button class="w3-bar-item w3-button tablink" (click)="openTab($event,'messages')">messages</button>
+            <button class="w3-bar-item w3-button tablink" (click)="openTab($event,'followers')">followers</button>
+            <button class="w3-bar-item w3-button tablink" (click)="openTab($event,'following')">following</button>
+            <button class="w3-bar-item w3-button tablink" (click)="openTab($event,'popularFollowers')">popular Followers</button>
+        </div>
+      
+        <div id="messages" class="w3-container w3-border tab tab-padding" style="display:none">
+          <div #messagesDiv *ngIf="messages.length > 0">
+            <div *ngFor="let msg of messages; let odd=odd; let even=even; ">
+                <span ><img src="http://www.drsfostersmith.com/images/masthead/icon_chat.png" />{{msg.content}}</span>
+            </div> 
+          </div>
+        </div>
+      
+      <div id="followers" class="w3-container w3-border tab tab-padding" style="display:none">
+          <div #followersDiv *ngIf="followers.length > 0">
+            <div *ngFor="let f of followers; let odd=odd; let even=even; ">
+                <span class="followerInfo"><img src="https://d1u5p3l4wpay3k.cloudfront.net/cod_esports_gamepedia_en/thumb/0/0c/Player.png/40px-Player.png?version=a8fdc6fe3406e1f47727c16c208c877f" />
+                  {{f.firstName}}, {{f.lastName}}, {{f.age}}, {{f.gender}}, {{f.email}}</span>
+            </div> 
+          </div>
+      </div>
+      
+      <div id="following" class="w3-container w3-border tab tab-padding" style="display:none;width:100%">
+          <div #followingDiv *ngIf="following.length > 0">
+              <div  *ngFor="let f of following;" >
+                <div >
+                    <img src="https://d1u5p3l4wpay3k.cloudfront.net/cod_esports_gamepedia_en/thumb/0/0c/Player.png/40px-Player.png?version=a8fdc6fe3406e1f47727c16c208c877f" />
+                    {{f.firstName}}, {{f.lastName}}, {{f.age}}, {{f.gender}}, {{f.email}}
+                    <div class="unFollowText">
+                        <a href=# (click)=unFollowUser(userName,f.userName)>unFollow</a>
+                    </div>
+                </div>
+                
+              </div>
+              
+          </div>
+      </div>
+
+      <div id="popularFollowers" class="w3-container w3-border tab tab-padding" style="display:none;width:100%">
+          <div #popularFollowersDiv *ngIf="popularFollowers.length > 0">
+              <table style="width:100%;">
+                  <tbody >
+                    <th colspan="8"> Username</th>
+                    <th colspan="2"> popular Follower Username</th>
+                    <th> Followers count</th>
+                      <tr  *ngFor="let pf of popularFollowers;" >
+                        <td colspan="9"> {{pf.userName }}</td>
+                        <td colspan="2"> {{pf.mostPopularFollower }}</td>
+                        <td> {{pf.numberOfFollowers}} </td>
+                      </tr>
+                  </tbody>
+                </table>
+              
+          </div>
+      </div>
+      
+      </div>
+      
+  
+  </body>
+</html>
